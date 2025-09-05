@@ -4,7 +4,14 @@
     <h2 class="text-2xl md:text-3xl font-semibold text-center mb-6 text-blue-900 tracking-tight">
         Exámenes de Laboratorio
     </h2>
- 
+
+    
+    @if (session('success'))
+        <div class="mb-4 p-4 text-green-800 bg-green-200 rounded-lg">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <form method="GET" action="{{ route('examens.index') }}" id="form-busqueda"
           class="mb-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between print:hidden">
 

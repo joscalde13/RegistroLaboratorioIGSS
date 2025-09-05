@@ -10,9 +10,17 @@ Route::get('/', function () {
     return redirect()->route('login');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+
+
+
+Route::get('dashboard', function() {
+    return redirect()->route('examens.stats');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
@@ -21,6 +29,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
     
+
+
     Route::get('/examens/create', [ExamenController::class, 'create'])->name('examens.create');
     Route::post('/examens', [ExamenController::class, 'store'])->name('examens.store');
     Route::get('/examens', [ExamenController::class, 'index'])->name('examens.index');
@@ -31,6 +41,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/examens/{id}', [ExamenController::class, 'destroy'])->name('examens.destroy');
     Route::get('/examens-export', [ExamenController::class, 'exportCsv'])->name('examens.export');
     Route::get('/examens-export-pdf', [ExamenController::class, 'exportPdf'])->name('examens.exportPdf');
+
+    
 });
 
 require __DIR__.'/auth.php';

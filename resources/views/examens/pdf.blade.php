@@ -12,7 +12,7 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
+                
                 <th>Correlativo</th>
                 <th>Fecha</th>
                 <th>N° Afiliación</th>
@@ -32,7 +32,7 @@
         <tbody>
             @foreach($examens as $examen)
             <tr>
-                <td>{{ $examen->id }}</td>
+             
                 <td>{{ $examen->correlativo }}</td>
                 <td>{{ \Carbon\Carbon::parse($examen->fecha)->format('d-m-Y') }}</td>
                 <td>{{ $examen->numero_afiliacion }}</td>

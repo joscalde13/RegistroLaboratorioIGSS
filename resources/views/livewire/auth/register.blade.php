@@ -1,5 +1,6 @@
 <div class="flex flex-col gap-6">
     <x-auth-header :title="__('Create an account')" :description="__('Enter your details below to create your account')" />
+    <x-auth-header :title="'Crear una cuenta'" :description="'Ingresa tus datos para crear tu cuenta'" />
 
     <!-- Session Status -->
     <x-auth-session-status class="text-center" :status="session('status')" />
@@ -8,7 +9,7 @@
         <!-- Name -->
         <flux:input
             wire:model="name"
-            :label="__('Name')"
+                :label="'Nombre'"
             type="text"
             required
             autofocus
@@ -19,7 +20,7 @@
         <!-- Email Address -->
         <flux:input
             wire:model="email"
-            :label="__('Email address')"
+                :label="'Correo electrónico'"
             type="email"
             required
             autocomplete="email"
@@ -29,7 +30,7 @@
         <!-- Password -->
         <flux:input
             wire:model="password"
-            :label="__('Password')"
+                :label="'Contraseña'"
             type="password"
             required
             autocomplete="new-password"
@@ -40,7 +41,7 @@
         <!-- Confirm Password -->
         <flux:input
             wire:model="password_confirmation"
-            :label="__('Confirm password')"
+                :label="'Confirmar contraseña'"
             type="password"
             required
             autocomplete="new-password"

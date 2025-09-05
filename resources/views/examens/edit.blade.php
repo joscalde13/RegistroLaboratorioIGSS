@@ -170,24 +170,32 @@
         </div>`;
     }
 
-    function llenarPruebas() {
+    let pruebasIniciales = null;
+    function llenarPruebas(usandoPerfil = false) {
         const perfil = document.getElementById('perfil').value;
-        const pruebas = perfiles[perfil] || [];
         const container = document.getElementById('pruebas-container');
         container.innerHTML = '';
 
-        // Si hay old('pruebas') del backend, respétalas
-        @php
-            $oldPruebas = old('pruebas', json_decode($examen->pruebas, true));
-        @endphp
-        @if(is_array($oldPruebas))
-            const oldPruebas = @json($oldPruebas);
-            if (oldPruebas.length) {
-                oldPruebas.forEach(p => container.insertAdjacentHTML('beforeend', inputPruebaTemplate(p)));
+        // Al cargar la vista, usar las pruebas guardadas del examen
+        if (!usandoPerfil) {
+            if (pruebasIniciales === null) {
+                @php
+                    $oldPruebas = old('pruebas', json_decode($examen->pruebas, true));
+                @endphp
+                @if(is_array($oldPruebas))
+                    pruebasIniciales = @json($oldPruebas);
+                @else
+                    pruebasIniciales = [];
+                @endif
+            }
+            if (pruebasIniciales.length) {
+                pruebasIniciales.forEach(p => container.insertAdjacentHTML('beforeend', inputPruebaTemplate(p)));
                 return;
             }
-        @endif
+        }
 
+        // Si el usuario selecciona otro perfil, cargar las pruebas por defecto
+        const pruebas = perfiles[perfil] || [];
         if (pruebas.length) {
             pruebas.forEach(p => container.insertAdjacentHTML('beforeend', inputPruebaTemplate(p)));
         } else {
@@ -196,7 +204,12 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        llenarPruebas();
+        llenarPruebas(false);
+
+        // Cambiar pruebas solo si el usuario selecciona otro perfil
+        document.getElementById('perfil').addEventListener('change', () => {
+            llenarPruebas(true);
+        });
 
         // Añadir prueba manual
         document.getElementById('btn-add-prueba').addEventListener('click', () => {
