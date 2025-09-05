@@ -36,6 +36,7 @@
         </div>
     </form>
     <div class="overflow-auto bg-white rounded-xl border border-blue-100 shadow-sm" style="max-height: 70vh;">
+        
         <table class="min-w-full text-sm text-left font-sans">
             <thead class="sticky top-0 bg-blue-50 text-blue-900 text-xs uppercase tracking-wider border-b border-blue-200 z-10">
                 <tr>
@@ -53,6 +54,7 @@
                     <th class="px-4 py-3 font-semibold">Sección</th>
                     <th class="px-4 py-3 font-semibold">Perfil</th>
                     <th class="px-4 py-3 font-semibold">Pruebas</th>
+                    <th class="px-4 py-3 font-semibold">Acciones</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-blue-50">
@@ -80,6 +82,16 @@
                             @endforeach
                         </div>
                     </td>
+                    <td class="px-3 py-2">
+                        <div class="flex gap-2">
+                            <a href="{{ route('examens.edit', $examen->id) }}" class="px-3 py-1 rounded bg-yellow-400 text-white text-xs font-semibold hover:bg-yellow-500 transition">Editar</a>
+                            <form method="POST" action="{{ route('examens.destroy', $examen->id) }}" onsubmit="return confirm('¿Seguro que deseas eliminar este examen?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="px-3 py-1 rounded bg-red-500 text-white text-xs font-semibold hover:bg-red-600 transition">Eliminar</button>
+                            </form>
+                        </div>
+                    </td>
                 </tr>
                 @empty
                 <tr>
@@ -90,7 +102,13 @@
                 @endforelse
             </tbody>
         </table>
+        
     </div>
+
+
+    <div class="mb-4 mt-4 flex justify-end gap-2">
+            <a href="{{ route('examens.exportPdf') }}" class="px-4 py-2 rounded bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition">Descargar PDF</a>
+     </div>
 </div>
 
 </x-layouts.app>

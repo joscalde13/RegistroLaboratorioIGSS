@@ -7,12 +7,7 @@
         Estadísticas y Totales de Exámenes
     </h2>
 
-    <div class="mt-8 mb-8 flex flex-wrap gap-3 justify-left print:hidden">
-        <a href="{{ route('examens.index') }}"
-           class="px-6 py-2 rounded-xl border border-gray-300 text-gray-800 font-medium hover:bg-gray-50 transition">
-            Volver al listado
-        </a>
-    </div>
+    
 
     
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">

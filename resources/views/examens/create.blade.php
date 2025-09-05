@@ -1,7 +1,7 @@
 <x-layouts.app :title="'Registro de Examen'">
-    
-<div class="w-full flex justify-center pb-12">
-                    <div class="w-full max-w-5xl p-4 max-h-[calc(100vh-32px)]">
+
+<div class="w-full flex justify-center h-screen">
+    <div class="w-full max-w-5xl p-4 overflow-y-auto" style="max-height: 90vh;">
     <h2 class="text-2xl md:text-3xl font-semibold text-center mb-6 text-blue-900 tracking-tight">
         Registro de Examen de Laboratorio IGSS
     </h2>
@@ -12,6 +12,7 @@
         <input type="hidden" name="fecha" value="{{ now()->toDateString() }}">
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        
             <!-- Fecha (solo visual) -->
             <div>
                 <label class="block text-sm font-medium text-blue-900 mb-1">Fecha</label>
@@ -146,12 +147,19 @@
         </div>
 
         <div class="mt-8 flex justify-end">
+            <a href="{{ route('examens.index') }}" id="btn-cancelar"
+               class="ml-2 px-6 py-3 rounded-xl text-gray-800 font-semibold border border-gray-300 hover:bg-gray-50 transition">
+                Cancelar
+            </a>
+            <span class="inline-block w-4"></span>
             <button type="submit"
                     class="px-6 py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 shadow hover:scale-105 transition">
                 Registrar
             </button>
+            
         </div>
     </form>
+    </div>
 </div>
 
 <!-- JS -->

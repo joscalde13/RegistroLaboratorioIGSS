@@ -8,19 +8,22 @@ use Illuminate\Support\Facades\DB;
 
 class ExamenController extends Controller
 {
-    // Mostrar formulario de registro
-    public function create()
+    public function exportPdf()
     {
-        $currentMonth = now()->format('Y-m');
-        $lastCorrelativo = \App\Models\Examen::whereRaw("strftime('%Y-%m', fecha) = ?", [$currentMonth])
-            ->max('correlativo');
-        $nextCorrelativo = ($lastCorrelativo ?? 0) + 1;
-    return view('examens.create', compact('nextCorrelativo'));
+        $examens = Examen::all();
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('examens.pdf', compact('examens'));
+        $pdf->setPaper('A4', 'landscape');
+        return $pdf->download('ExamenesLaboratorio.pdf');
+    }
+    public function edit($id)
+    {
+        $examen = Examen::findOrFail($id);
+        return view('examens.edit', compact('examen'));
     }
 
-    // Guardar examen
-    public function store(Request $request)
+    public function update(Request $request, $id)
     {
+        $examen = Examen::findOrFail($id);
         $data = $request->validate([
             'numero_afiliacion' => 'required',
             'nombre' => 'required',
@@ -35,6 +38,54 @@ class ExamenController extends Controller
             'perfil' => 'required',
             'pruebas' => 'required',
         ]);
+        $data['pruebas'] = json_encode($request->input('pruebas'));
+        $examen->update($data);
+        return redirect()->route('examens.index')->with('success', 'Examen actualizado correctamente');
+    }
+
+    public function destroy($id)
+    {
+        $examen = Examen::findOrFail($id);
+        $examen->delete();
+        return redirect()->route('examens.index')->with('success', 'Examen eliminado correctamente');
+    }
+
+
+    
+    public function create()
+    {
+        $currentMonth = now()->format('Y-m');
+        $lastCorrelativo = \App\Models\Examen::whereRaw("strftime('%Y-%m', fecha) = ?", [$currentMonth])
+            ->max('correlativo');
+        $nextCorrelativo = ($lastCorrelativo ?? 0) + 1;
+
+        return view('examens.create', compact('nextCorrelativo'));
+
+    }
+
+
+
+
+    
+    public function store(Request $request)
+    {
+
+        $data = $request->validate([
+            'numero_afiliacion' => 'required',
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'sexo' => 'required',
+            'calidad' => 'required',
+            'edad' => 'required|integer',
+            'unidad' => 'required',
+            'area' => 'required',
+            'programa' => 'required',
+            'seccion' => 'required',
+            'perfil' => 'required',
+            'pruebas' => 'required',
+        ]);
+
+
         $data['fecha'] = now();
         $currentMonth = now()->format('Y-m');
         $lastCorrelativo = \App\Models\Examen::whereRaw("strftime('%Y-%m', fecha) = ?", [$currentMonth])
@@ -42,30 +93,23 @@ class ExamenController extends Controller
         $data['correlativo'] = ($lastCorrelativo ?? 0) + 1;
         $data['pruebas'] = json_encode($request->input('pruebas'));
         Examen::create($data);
+
         return redirect()->route('examens.index')->with('success', 'Examen registrado correctamente');
+
+
     }
 
-    // Listar exámenes
+    
     public function index(Request $request)
     {
         $query = Examen::query();
-        // Filtro de búsqueda
+        
+        
         if ($request->has('search')) {
             $search = $request->input('search');
             if (trim($search) !== '') {
-                $query->where('nombre', 'like', "%$search%")
-                      ->orWhere('apellido', 'like', "%$search%")
-                      ->orWhere('numero_afiliacion', 'like', "%$search%")
-                      ->orWhere('perfil', 'like', "%$search%")
-                      ->orWhere('pruebas', 'like', "%$search%")
-                      ->orWhere('unidad', 'like', "%$search%")
-                      ->orWhere('area', 'like', "%$search%")
-                      ->orWhere('programa', 'like', "%$search%")
-                      ->orWhere('seccion', 'like', "%$search%")
-                      ->orWhere('calidad', 'like', "%$search%")
-                      ->orWhere('sexo', 'like', "%$search%")
-                      ->orWhere('edad', 'like', "%$search%")
-                      ->orWhere('fecha', 'like', "%$search%");
+                $query->where('nombre', 'like', "%$search%");
+
             }
         }
     $examens = $query->orderBy('id')->get(); // Orden ascendente: antiguos arriba, nuevos abajo
@@ -101,10 +145,15 @@ class ExamenController extends Controller
         return view('examens.stats', compact('totales'));
     }
 
+
+
+
     // Mostrar datos de un paciente para imprimir
     public function show($id)
     {
         $examen = Examen::findOrFail($id);
         return view('examens.show', compact('examen'));
     }
+ 
+
 }
