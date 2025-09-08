@@ -2,5 +2,5 @@
     <img src="img/logo.jpg" alt="">
 </div>
 <div class="ms-1 grid flex-1 text-start text-sm">
-    <span class="mb-0.5 truncate leading-tight font-semibold">Carlinux Inc. S.A. </span>
+    <span class="mb-0.5 truncate leading-tight font-semibold">Plantilla</span>
 </div>
