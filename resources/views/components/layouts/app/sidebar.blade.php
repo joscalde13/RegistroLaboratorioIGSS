@@ -14,7 +14,8 @@
 
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Menú de navegación')" class="grid">
-                    <flux:navlist.item :href="route('dashboard')" :active="request()->routeIs('dashboard')" icon="home" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    <flux:navlist.item icon="chart-bar" :href="route('examens.stats')" :current="request()->routeIs('examens.stats')" wire:navigate>{{ __('Ver Estadísticas') }}</flux:navlist.item>
+                    <flux:navlist.item icon="clipboard-document-list" :href="route('examens.index')" :current="request()->routeIs('examens.index')" wire:navigate>{{ __('Exámenes Laboratorio') }}</flux:navlist.item>  
                     
                 </flux:navlist.group>
             </flux:navlist>
