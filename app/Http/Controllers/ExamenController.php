@@ -24,7 +24,7 @@ class ExamenController extends Controller
                     });
                 }
             }
-        $examens = $query->orderBy('id')->get(); // Orden ascendente: antiguos arriba, nuevos abajo
+        $examens = $query->orderBy('id')->get(); 
             return view('examens.index', compact('examens'));
     }
 

@@ -10,7 +10,7 @@
         </div>
     @endif
 
-    <!-- Search and Actions Bar -->
+    
     <div class="mb-6 bg-white dark:bg-zinc-800 rounded-lg border border-blue-100 dark:border-zinc-700 shadow-sm p-4 print:hidden">
         <form method="GET" action="{{ route('examens.index') }}" id="form-busqueda"
               class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between w-full">
@@ -47,7 +47,7 @@
         </form>
     </div>
 
-    <!-- Table Container -->
+   
     <div class="bg-white dark:bg-zinc-800 rounded-lg border border-blue-100 dark:border-zinc-700 shadow-sm">
     <div class="overflow-x-auto">
             <table class="w-full text-sm text-left font-sans dark:text-zinc-200">
@@ -155,7 +155,7 @@
         </div>
     </div>
 
-    <!-- Pagination if needed -->
+   
     @if(method_exists($examens, 'links'))
         <div class="mt-6">
             {{ $examens->links() }}
@@ -163,7 +163,7 @@
     @endif
 </div>
 
-<!-- Mobile-friendly styles -->
+
 <style>
     @media (max-width: 768px) {
         .table-container {
