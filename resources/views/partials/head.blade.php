@@ -3,9 +3,12 @@
 
 <title>{{ $title ?? config('app.name') }}</title>
 
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Favicon personalizado: logo.jpg en todos los formatos -->
+<link rel="icon" type="image/jpeg" href="{{ asset('img/logo.jpg') }}" sizes="32x32">
+<link rel="icon" type="image/jpeg" href="{{ asset('img/logo.jpg') }}" sizes="48x48">
+<link rel="shortcut icon" href="{{ asset('img/logo.jpg') }}">
+<link rel="apple-touch-icon" href="{{ asset('img/logo.jpg') }}">
+<meta name="msapplication-TileImage" content="{{ asset('img/logo.jpg') }}">
 
 <link rel="preconnect" href="https://fonts.bunny.net">
 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
