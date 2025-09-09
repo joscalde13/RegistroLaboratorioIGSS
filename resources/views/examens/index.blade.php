@@ -13,7 +13,7 @@
     <!-- Search and Actions Bar -->
     <div class="mb-6 bg-white dark:bg-zinc-800 rounded-lg border border-blue-100 dark:border-zinc-700 shadow-sm p-4 print:hidden">
         <form method="GET" action="{{ route('examens.index') }}" id="form-busqueda"
-              class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+              class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between w-full">
 
             <div class="flex items-center gap-3 w-full sm:max-w-lg">
                 <div class="relative flex-1">
@@ -36,11 +36,11 @@
 
             <div class="flex items-center gap-3 w-full sm:w-auto">
                 <a href="{{ route('examens.exportPdf') }}" 
-                   class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition text-center">
+                   class="px-4 py-2.5 rounded-lg bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition text-center w-full sm:w-auto">
                     Descargar PDF
                 </a>
                 <a href="{{ route('examens.create') }}"
-                   class="flex-1 sm:flex-none px-4 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold hover:scale-105 transition text-sm text-center">
+                   class="px-4 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold hover:scale-105 transition text-sm text-center w-full sm:w-auto">
                     + Nuevo Examen
                 </a>
             </div>
