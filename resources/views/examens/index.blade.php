@@ -95,15 +95,11 @@
                                 {{ $examen->unidad }}
                             </div>
                         </td>
-                        <td class="px-3 py-3">
-                            <div class="max-w-24 truncate" title="{{ $examen->area }}">
-                                {{ $examen->area }}
-                            </div>
+                        <td class="px-3 py-3" title="{{ $examen->area }}">
+                            {{ $examen->area }}
                         </td>
-                        <td class="px-3 py-3">
-                            <div class="max-w-32 truncate" title="{{ $examen->programa }}">
-                                {{ $examen->programa }}
-                            </div>
+                        <td class="px-3 py-3" title="{{ $examen->programa }}">
+                            {{ $examen->programa }}
                         </td>
                         <td class="px-3 py-3">{{ $examen->seccion }}</td>
                         <td class="px-3 py-3">{{ $examen->perfil }}</td>

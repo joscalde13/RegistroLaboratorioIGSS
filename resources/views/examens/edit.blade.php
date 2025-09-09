@@ -134,7 +134,7 @@
     </div>
     <div class="mt-8 flex justify-end">
         <a href="{{ route('examens.index') }}"
-           class="ml-2 px-6 py-3 rounded-xl text-gray-800 font-semibold border border-gray-300 hover:bg-gray-50 transition inline-block">
+           class="ml-2 px-6 py-3 rounded-xl text-white-800 font-semibold border border-gray-300 hover:bg-gray-50 transition inline-block">
             Cancelar
         </a>
         <span class="inline-block w-4"></span>
