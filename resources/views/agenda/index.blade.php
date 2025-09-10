@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('modal-estado').textContent = info.event.extendedProps.estado;
             document.getElementById('modal-fecha').textContent = info.event.extendedProps.fecha;
             document.getElementById('modal-bg').classList.remove('hidden');
-            // Guardar afiliacion para scroll
+           
             window._modalAfiliacion = info.event.extendedProps.afiliacion;
         },
         dateClick: function(info) {
