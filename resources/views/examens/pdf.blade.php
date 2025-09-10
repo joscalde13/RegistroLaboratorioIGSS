@@ -27,6 +27,7 @@
                 <th>Sección</th>
                 <th>Perfil</th>
                 <th>Pruebas</th>
+                <th>Estado</th>
             </tr>
         </thead>
         <tbody>
@@ -51,6 +52,7 @@
                         <span>{{ $prueba }}</span>@if(!$loop->last), @endif
                     @endforeach
                 </td>
+                <td>{{ $examen->estado }}</td>
             </tr>
             @endforeach
         </tbody>

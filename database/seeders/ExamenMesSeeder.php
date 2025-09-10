@@ -15,45 +15,87 @@ class ExamenMesSeeder extends Seeder
     {
         // No truncar la tabla, así los exámenes previos siguen ahí
 
-        // Agosto: 3 exámenes
-        $fechaAgosto = Carbon::create(2025, 8, 10);
-        $calidades = ['AF', 'BH', 'Pen', 'BE', 'NA'];
-        for ($i = 1; $i <= 3; $i++) {
-            Examen::create([
-                'numero_afiliacion' => 'AUG-00' . $i,
-                'nombre' => 'Paciente Agosto ' . $i,
-                'apellido' => 'Apellido',
+        // Agosto: 3 exámenes con nombres reales y diferentes estados
+        $examenesAgosto = [
+            [
+                'numero_afiliacion' => 'IGSS-1001',
+                'nombre' => 'Juan Carlos',
+                'apellido' => 'Ramírez',
                 'sexo' => 'Masculino',
-                'calidad' => $calidades[($i-1)%count($calidades)],
-                'edad' => 30,
+                'calidad' => 'AF',
+                'edad' => 28,
                 'unidad' => 'Patulul',
                 'area' => 'Consulta Externa',
                 'programa' => 'Enfermedad Común',
                 'seccion' => 'Hematología',
-                'perfil' => 'Perfil',
-                'pruebas' => json_encode(['Prueba1']),
-                'fecha' => $fechaAgosto,
-                'correlativo' => $i,
-            ]);
+                'perfil' => 'Pediatrico',
+                'pruebas' => json_encode(['Hemograma']),
+                'fecha' => Carbon::create(2025, 8, 10),
+                'fecha_cita' => Carbon::create(2025, 8, 15),
+                'estado' => 'pendiente',
+                'correlativo' => 1,
+            ],
+            [
+                'numero_afiliacion' => 'IGSS-1002',
+                'nombre' => 'María Fernanda',
+                'apellido' => 'Gómez',
+                'sexo' => 'Femenino',
+                'calidad' => 'BH',
+                'edad' => 34,
+                'unidad' => 'Guatemala',
+                'area' => 'Emergencia',
+                'programa' => 'Gineco-Obstetricia',
+                'seccion' => 'Bioquímica',
+                'perfil' => 'Diabetes',
+                'pruebas' => json_encode(['Glucosa', 'Hemoglobina']),
+                'fecha' => Carbon::create(2025, 8, 12),
+                'fecha_cita' => Carbon::create(2025, 8, 18),
+                'estado' => 'toma de muestras',
+                'correlativo' => 2,
+            ],
+            [
+                'numero_afiliacion' => 'IGSS-1003',
+                'nombre' => 'Luis Alberto',
+                'apellido' => 'Martínez',
+                'sexo' => 'Masculino',
+                'calidad' => 'Pen',
+                'edad' => 45,
+                'unidad' => 'Mazatenango',
+                'area' => 'Encamamiento',
+                'programa' => 'Traumatología y Ortopedia',
+                'seccion' => 'Urología',
+                'perfil' => 'Renal',
+                'pruebas' => json_encode(['Creatinina']),
+                'fecha' => Carbon::create(2025, 8, 14),
+                'fecha_cita' => Carbon::create(2025, 8, 20),
+                'estado' => 'finalizado',
+                'correlativo' => 3,
+            ],
+        ];
+        foreach ($examenesAgosto as $examen) {
+            Examen::create($examen);
         }
 
         // Septiembre: 2 exámenes
+        $calidades = ['AF', 'BH', 'Pen', 'BE', 'NA'];
         $fechaSeptiembre = Carbon::create(2025, 9, 5);
         for ($i = 1; $i <= 2; $i++) {
             Examen::create([
                 'numero_afiliacion' => 'SEP-00' . $i,
-                'nombre' => 'Paciente Septiembre ' . $i,
-                'apellido' => 'Apellido',
-                'sexo' => 'Femenino',
+                'nombre' => $i === 1 ? 'Ana Sofía' : 'Carlos Enrique',
+                'apellido' => $i === 1 ? 'López' : 'Méndez',
+                'sexo' => $i === 1 ? 'Femenino' : 'Masculino',
                 'calidad' => $calidades[($i+1)%count($calidades)],
-                'edad' => 25,
-                'unidad' => 'Pochuta',
+                'edad' => $i === 1 ? 22 : 39,
+                'unidad' => $i === 1 ? 'Santa Barbara' : 'San Lucas Tolimán',
                 'area' => 'Encamamiento',
                 'programa' => 'Gineco-Obstetricia',
                 'seccion' => 'Coprología',
                 'perfil' => 'Perfil',
                 'pruebas' => json_encode(['Prueba2']),
-                'fecha' => $fechaSeptiembre,
+                'fecha' => $fechaSeptiembre->copy()->addDays($i),
+                'fecha_cita' => $fechaSeptiembre->copy()->addDays($i+2),
+                'estado' => $i === 1 ? 'proceso' : 'pendiente',
                 'correlativo' => $i,
             ]);
         }

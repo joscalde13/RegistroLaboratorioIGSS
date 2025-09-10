@@ -11,6 +11,8 @@ class Examen extends Model
 
     protected $fillable = [
         'fecha',
+        'fecha_cita',
+        'estado',
         'correlativo',
         'numero_afiliacion',
         'nombre',
