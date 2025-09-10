@@ -15,8 +15,8 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Menú de navegación')" class="grid">
                     <flux:navlist.item icon="chart-bar" :href="route('examens.stats')" :current="request()->routeIs('examens.stats')" wire:navigate>{{ __('Ver Estadísticas') }}</flux:navlist.item>
+                    <flux:navlist.item icon="calendar-days" :href="route('agenda.index')" :current="request()->routeIs('agenda.index')">{{ __('Agenda de Citas') }}</flux:navlist.item>
                     <flux:navlist.item icon="clipboard-document-list" :href="route('examens.index')" :current="request()->routeIs('examens.index')" wire:navigate>{{ __('Exámenes Laboratorio') }}</flux:navlist.item>  
-                    <flux:navlist.item icon="calendar-days" :href="route('dashboard')" :current="request()->routeIs('')" wire:navigate>{{ __('Agendar Cita') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

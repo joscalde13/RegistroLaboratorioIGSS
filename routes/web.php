@@ -42,7 +42,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/examens-export', [ExamenController::class, 'exportCsv'])->name('examens.export');
     Route::get('/examens-export-pdf', [ExamenController::class, 'exportPdf'])->name('examens.exportPdf');
 
-    
+    Route::get('/agenda', [App\Http\Controllers\AgendaController::class, 'index'])->name('agenda.index');
+    Route::put('/agenda/{id}/estado', [App\Http\Controllers\AgendaController::class, 'updateEstado'])->name('agenda.updateEstado');
 });
 
 require __DIR__.'/auth.php';

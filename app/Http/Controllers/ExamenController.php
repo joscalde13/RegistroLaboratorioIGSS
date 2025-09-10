@@ -24,8 +24,9 @@ class ExamenController extends Controller
                     });
                 }
             }
-        $examens = $query->orderBy('id')->get(); 
-            return view('examens.index', compact('examens'));
+    $query->where('estado', 'finalizado');
+    $examens = $query->orderBy('id')->get(); 
+    return view('examens.index', compact('examens'));
     }
 
 
@@ -73,9 +74,10 @@ class ExamenController extends Controller
                 'seccion' => 'required',
                 'perfil' => 'required',
                 'pruebas' => 'required',
+                'fecha_cita' => 'required|date',
             ]);
 
-
+            $data['estado'] = 'pendiente';
             $data['fecha'] = now();
             $currentMonth = now()->format('Y-m');
             $lastCorrelativo = \App\Models\Examen::whereRaw("strftime('%Y-%m', fecha) = ?", [$currentMonth])
@@ -84,7 +86,7 @@ class ExamenController extends Controller
             $data['pruebas'] = json_encode($request->input('pruebas'));
             Examen::create($data);
 
-            return redirect()->route('examens.index')->with('success', 'Examen registrado correctamente');
+            return redirect()->route('agenda.index')->with('success', 'Examen registrado correctamente');
 
 
     }

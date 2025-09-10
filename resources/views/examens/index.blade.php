@@ -35,6 +35,10 @@
             </div>
 
             <div class="flex items-center gap-3 w-full sm:w-auto">
+                <a href="{{ route('agenda.index') }}"
+                   class="px-4 py-2.5 rounded-lg bg-green-600 text-white font-semibold text-sm hover:bg-green-700 transition text-center w-full sm:w-auto">
+                    Ir a Agenda de Citas
+                </a>
                 <a href="{{ route('examens.exportPdf') }}" 
                    class="px-4 py-2.5 rounded-lg bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition text-center w-full sm:w-auto">
                     Descargar PDF
@@ -67,6 +71,7 @@
                         <th class="px-3 py-3 font-semibold whitespace-nowrap">Sección</th>
                         <th class="px-3 py-3 font-semibold whitespace-nowrap">Perfil</th>
                         <th class="px-3 py-3 font-semibold whitespace-nowrap">Pruebas</th>
+                        <th class="px-3 py-3 font-semibold whitespace-nowrap">Estado</th>
                         <th class="px-3 py-3 font-semibold whitespace-nowrap">Acciones</th>
                     </tr>
                 </thead>
@@ -111,6 +116,16 @@
                                     </span>
                                 @endforeach
                             </div>
+                        </td>
+                        <td class="px-3 py-3">
+                            <span class="inline-flex items-center px-2 py-1 text-xs rounded-full font-medium
+                                @if($examen->estado === 'pendiente') bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200
+                                @elseif($examen->estado === 'toma de muestras') bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200
+                                @elseif($examen->estado === 'proceso') bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200
+                                @elseif($examen->estado === 'finalizado') bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200
+                                @else bg-gray-100 dark:bg-zinc-700 text-gray-800 dark:text-zinc-200 @endif">
+                                {{ $examen->estado }}
+                            </span>
                         </td>
                         <td class="px-3 py-3">
                             <div class="flex gap-1">

@@ -12,10 +12,17 @@
             <input type="hidden" name="fecha" value="{{ now()->toDateString() }}">
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                <!-- Fecha de cita -->
+                <div>
+                    <label class="block text-sm font-medium text-blue-900 dark:text-zinc-200 mb-1">Fecha de cita</label>
+                    <input type="date" name="fecha_cita" value="{{ request('fecha_cita') ?? old('fecha_cita') }}" required
+                        class="w-full px-3 py-2 rounded-lg border border-blue-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-blue-900 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-300 text-sm">
+                </div>
+
                 
                 <!-- Fecha (solo visual) -->
                 <div>
-                    <label class="block text-sm font-medium text-blue-900 dark:text-zinc-200 mb-1">Fecha</label>
+                    <label class="block text-sm font-medium text-blue-900 dark:text-zinc-200 mb-1">Fecha de creacion de registro</label>
               <input type="text" value="{{ date('d-m-Y') }}" disabled
                   class="w-full px-3 py-2 rounded-lg border border-blue-200 dark:border-zinc-700 bg-blue-50 dark:bg-zinc-900 text-blue-900 dark:text-zinc-200 focus:outline-none text-sm">
                 </div>
