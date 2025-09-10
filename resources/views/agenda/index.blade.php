@@ -71,6 +71,21 @@
 
 
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css' rel='stylesheet' />
+<style>
+    /* Hover para los días del calendario */
+    .fc-daygrid-day:hover {
+        background: #dbeafe !important;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    /* Hover para eventos */
+    .fc-daygrid-event:hover {
+        background: #38bdf8 !important;
+        color: #fff !important;
+        box-shadow: 0 2px 8px rgba(56,189,248,0.2);
+        transition: background 0.2s, color 0.2s;
+    }
+</style>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -104,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     calendar.render();
 
-    // Botón para cambiar estado desde el modal
+    // Botón para cambiar estado desde el modal (solo una función)
     document.getElementById('modal-cambiar-estado').onclick = function() {
         document.getElementById('modal-bg').classList.add('hidden');
         var afiliacion = window._modalAfiliacion;
@@ -125,30 +140,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 setTimeout(function() {
                     celdaEstado.style.boxShadow = '';
                     celdaEstado.style.transform = '';
-                }, 2000);
-            }
-        });
-        if (!encontrada) {
-            alert('No se encontró la cita en la tabla.');
-        }
-    };
-
-    // Botón para cambiar estado
-    document.getElementById('modal-cambiar-estado').onclick = function() {
-        document.getElementById('modal-bg').classList.add('hidden');
-        var afiliacion = window._modalAfiliacion;
-        if (!afiliacion) return;
-        // Buscar la fila en la tabla
-        var filas = document.querySelectorAll('table tbody tr');
-        var encontrada = false;
-        filas.forEach(function(fila) {
-            var celdaAfiliacion = fila.querySelector('td:nth-child(2)');
-            if (celdaAfiliacion && celdaAfiliacion.textContent.trim() === afiliacion) {
-                fila.scrollIntoView({behavior: 'smooth', block: 'center'});
-                fila.classList.add('ring-2', 'ring-green-500');
-                encontrada = true;
-                setTimeout(function() {
-                    fila.classList.remove('ring-2', 'ring-green-500');
                 }, 2000);
             }
         });
