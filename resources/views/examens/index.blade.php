@@ -21,7 +21,7 @@
                         type="text"
                         name="search"
                         id="input-busqueda"
-                        placeholder="Buscar por nombre, apellido o número de afiliación..."
+                        placeholder="Buscar por cualquier dato, día, mes o año..."
                         value="{{ request('search') }}"
                         class="w-full pl-4 pr-4 py-2.5 rounded-lg border border-blue-200 bg-white text-blue-900
                                placeholder-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-300 text-sm"
@@ -134,7 +134,7 @@
                         <td class="px-3 py-3">
                             <div class="flex gap-1">
                                 <a href="{{ route('examens.edit', $examen->id) }}" 
-                                   class="px-2 py-1 rounded text-white text-xs font-semibold bg-amber-500 hover:bg-amber-600 transition"
+                                   class="min-w-[90px] px-2.5 py-1.5 rounded text-white text-xs font-semibold bg-amber-500 hover:bg-amber-600 transition text-center"
                                    title="Editar examen">
                                     Editar
                                 </a>
@@ -144,13 +144,13 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" 
-                                            class="px-2 py-1 rounded text-white text-xs font-semibold bg-red-500 hover:bg-red-600 transition"
+                                            class="min-w-[90px] px-2.5 py-1.5 rounded text-white text-xs font-semibold bg-red-500 hover:bg-red-600 transition text-center"
                                             title="Eliminar examen">
                                         Eliminar
                                     </button>
                                 </form>
                                 <a href="{{ route('examens.historial', $examen->numero_afiliacion) }}"
-                                   class="px-2 py-1 rounded text-white text-xs font-semibold bg-blue-600 hover:bg-blue-700 transition"
+                                   class="min-w-[90px] px-2.5 py-1.5 rounded text-white text-xs font-semibold bg-blue-600 hover:bg-blue-700 transition text-center"
                                    title="Ver historial de pruebas">
                                     Ver historial
                                 </a>
