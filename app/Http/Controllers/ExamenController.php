@@ -1,37 +1,62 @@
+    public function statsPdf()
+    {
+        // Aquí va la lógica para exportar las estadísticas en PDF
+        return response('Descarga de PDF de estadísticas no implementada aún.', 200);
+    }
+
+    public function statsExcel()
+    {
+        // Aquí va la lógica para exportar las estadísticas en Excel
+        return response('Descarga de Excel de estadísticas no implementada aún.', 200);
+    }
 <?php
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExamensExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Models\Examen;
 use Illuminate\Support\Facades\DB;
 
 class ExamenController extends Controller
 {
+    public function historialPaciente($numeroAfiliacion)
+    {
+        $paciente = \App\Models\Paciente::where('numero_afiliacion', $numeroAfiliacion)->first();
+        $historial = Examen::where('numero_afiliacion', $numeroAfiliacion)
+            ->where('estado', 'finalizado')
+            ->orderBy('fecha', 'desc')->get();
+        return view('examens.historial', [
+            'historial' => $historial,
+            'paciente' => $paciente,
+            'numeroAfiliacion' => $numeroAfiliacion
+        ]);
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new ExamensExport, 'ExamenesLaboratorio.xlsx');
+    }
 
     public function index(Request $request)
     {
-            $query = Examen::query();
-            
-            
-            if ($request->has('search')) {
-                $search = $request->input('search');
-                if (trim($search) !== '') {
-                    $query->where(function($q) use ($search) {
-                        $q->where('nombre', 'like', "%$search%")
-                          ->orWhere('apellido', 'like', "%$search%")
-                          ->orWhere('numero_afiliacion', 'like', "%$search%");
-                    });
-                }
+        $query = Examen::query();
+        
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            if (trim($search) !== '') {
+                $query->where(function($q) use ($search) {
+                    $q->where('nombre', 'like', "%$search%")
+                      ->orWhere('apellido', 'like', "%$search%")
+                      ->orWhere('numero_afiliacion', 'like', "%$search%");
+                });
             }
-    $query->where('estado', 'finalizado');
-    $examens = $query->orderBy('id')->get(); 
-    return view('examens.index', compact('examens'));
+        }
+        $query->where('estado', 'finalizado');
+        $examens = $query->orderBy('id')->get(); 
+        return view('examens.index', compact('examens'));
     }
-
-
-
-
     public function exportPdf()
     {
         $examens = Examen::all();
@@ -40,14 +65,27 @@ class ExamenController extends Controller
         return $pdf->download('ExamenesLaboratorio.pdf');
     }
 
+    // --- Métodos de exportación de estadísticas ---
+    public function statsPdf()
+    {
+        // Aquí va la lógica para exportar las estadísticas en PDF
+        return response('Descarga de PDF de estadísticas no implementada aún.', 200);
+    }
+
+    public function statsExcel()
+    {
+        // Aquí va la lógica para exportar las estadísticas en Excel
+        return response('Descarga de Excel de estadísticas no implementada aún.', 200);
+    }
+
 
 
 
 
     public function create()
     {
-        $currentMonth = now()->format('Y-m');
-        $lastCorrelativo = \App\Models\Examen::whereRaw("strftime('%Y-%m', fecha) = ?", [$currentMonth])
+        $currentMonth = now()->format('Y-%m');
+        $lastCorrelativo = \App\Models\Examen::whereRaw("DATE_FORMAT(fecha, '%Y-%m') = ?", [$currentMonth])
             ->max('correlativo');
         $nextCorrelativo = ($lastCorrelativo ?? 0) + 1;
 
@@ -61,32 +99,46 @@ class ExamenController extends Controller
     public function store(Request $request)
     {
 
-            $data = $request->validate([
-                'numero_afiliacion' => 'required',
-                'nombre' => 'required',
-                'apellido' => 'required',
-                'sexo' => 'required',
-                'calidad' => 'required',
-                'edad' => 'required|integer',
-                'unidad' => 'required',
-                'area' => 'required',
-                'programa' => 'required',
-                'seccion' => 'required',
-                'perfil' => 'required',
-                'pruebas' => 'required',
-                'fecha_cita' => 'required|date',
-            ]);
+        $data = $request->validate([
+            'numero_afiliacion' => 'required',
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'sexo' => 'required',
+            'calidad' => 'required',
+            'edad' => 'required|integer',
+            'unidad' => 'required',
+            'area' => 'required',
+            'programa' => 'required',
+            'seccion' => 'required',
+            'perfil' => 'required',
+            'pruebas' => 'required',
+            'fecha_cita' => 'required|date',
+        ]);
 
-            $data['estado'] = 'pendiente';
-            $data['fecha'] = now();
-            $currentMonth = now()->format('Y-m');
-            $lastCorrelativo = \App\Models\Examen::whereRaw("strftime('%Y-%m', fecha) = ?", [$currentMonth])
-                ->max('correlativo');
-            $data['correlativo'] = ($lastCorrelativo ?? 0) + 1;
-            $data['pruebas'] = json_encode($request->input('pruebas'));
-            Examen::create($data);
+        // Crear perfil de paciente si no existe
+        $pacienteData = [
+            'numero_afiliacion' => $data['numero_afiliacion'],
+            'nombre' => $data['nombre'],
+            'apellido' => $data['apellido'],
+            'sexo' => $data['sexo'],
+            'edad' => $data['edad'],
+        ];
+        \App\Models\Paciente::updateOrCreate(
+            ['numero_afiliacion' => $data['numero_afiliacion']],
+            $pacienteData
+        );
 
-            return redirect()->route('agenda.index')->with('success', 'Examen registrado correctamente');
+        $data['estado'] = 'pendiente';
+        $data['fecha'] = now();
+        $currentMonth = now()->format('Y-m');
+        $lastCorrelativo = \App\Models\Examen::where('numero_afiliacion', $data['numero_afiliacion'])
+            ->whereRaw("DATE_FORMAT(fecha, '%Y-%m') = ?", [$currentMonth])
+            ->max('correlativo');
+        $data['correlativo'] = ($lastCorrelativo ?? 0) + 1;
+        $data['pruebas'] = json_encode($request->input('pruebas'));
+        Examen::create($data);
+
+        return redirect()->route('agenda.index')->with('success', 'Examen registrado correctamente');
 
 
     }

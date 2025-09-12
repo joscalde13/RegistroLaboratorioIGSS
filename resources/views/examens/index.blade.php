@@ -43,6 +43,10 @@
                    class="px-4 py-2.5 rounded-lg bg-red-600 text-white font-semibold text-sm hover:bg-red-700 transition text-center w-full sm:w-auto">
                     Descargar PDF
                 </a>
+                <a href="{{ route('examens.exportExcel') }}"
+                   class="px-4 py-2.5 rounded-lg bg-green-700 text-white font-semibold text-sm hover:bg-green-800 transition text-center w-full sm:w-auto">
+                    Descargar Excel
+                </a>
                 <a href="{{ route('examens.create') }}"
                    class="px-4 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold hover:scale-105 transition text-sm text-center w-full sm:w-auto">
                     + Nuevo Examen
@@ -145,6 +149,11 @@
                                         Eliminar
                                     </button>
                                 </form>
+                                <a href="{{ route('examens.historial', $examen->numero_afiliacion) }}"
+                                   class="px-2 py-1 rounded text-white text-xs font-semibold bg-blue-600 hover:bg-blue-700 transition"
+                                   title="Ver historial de pruebas">
+                                    Ver historial
+                                </a>
                             </div>
                         </td>
                     </tr>

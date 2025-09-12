@@ -1,6 +1,14 @@
 <x-layouts.app :title="'Totales de Exámenes'">
     
 <div class="max-w-7xl mx-auto p-6 pb-0 ">
+    <div class="mb-6 flex flex-wrap gap-2 justify-end">
+        <a href="{{ route('examens.statsPdf') }}" class="px-4 py-2 rounded bg-red-600 text-white font-semibold hover:bg-red-700 transition">
+            Descargar PDF
+        </a>
+        <a href="{{ route('examens.statsExcel') }}" class="px-4 py-2 rounded bg-green-600 text-white font-semibold hover:bg-green-700 transition">
+            Descargar Excel
+        </a>
+    </div>
      
     
     <h2 class="text-2xl font-bold text-center mb-8 text-gray-700 dark:text-gray-200 tracking-wide  pb-4">

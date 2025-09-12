@@ -17,6 +17,7 @@
                     <flux:navlist.item icon="chart-bar" :href="route('examens.stats')" :current="request()->routeIs('examens.stats')" wire:navigate>{{ __('Ver Estadísticas') }}</flux:navlist.item>
                     <flux:navlist.item icon="calendar-days" :href="route('agenda.index')" :current="request()->routeIs('agenda.index')">{{ __('Agenda de Citas') }}</flux:navlist.item>
                     <flux:navlist.item icon="clipboard-document-list" :href="route('examens.index')" :current="request()->routeIs('examens.index')" wire:navigate>{{ __('Exámenes Laboratorio') }}</flux:navlist.item>  
+                    <flux:navlist.item icon="archive-box" :href="route('reportes.index')" :current="request()->routeIs('reportes.*')" wire:navigate>{{ __('Reportes por Año') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

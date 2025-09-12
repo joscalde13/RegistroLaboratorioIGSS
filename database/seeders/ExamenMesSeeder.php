@@ -13,11 +13,22 @@ class ExamenMesSeeder extends Seeder
      */
     public function run(): void
     {
-        // No truncar la tabla, así los exámenes previos siguen ahí
 
-        // Agosto: 3 exámenes con nombres reales y diferentes estados
+        // Paciente y exámenes de agosto
+        \App\Models\Paciente::create([
+            'numero_afiliacion' => 'IGSS-1001',
+            'nombre' => 'Juan Carlos',
+            'apellido' => 'Ramírez',
+            'sexo' => 'Masculino',
+            'edad' => 28
+        ]);
+
+
+        // Exámenes de agosto para dos pacientes, correlativo reiniciado por paciente
         $examenesAgosto = [
             [
+                'fecha' => '2025-08-10',
+                'fecha_cita' => '2025-08-15',
                 'numero_afiliacion' => 'IGSS-1001',
                 'nombre' => 'Juan Carlos',
                 'apellido' => 'Ramírez',
@@ -30,30 +41,11 @@ class ExamenMesSeeder extends Seeder
                 'seccion' => 'Hematología',
                 'perfil' => 'Pediatrico',
                 'pruebas' => json_encode(['Hemograma']),
-                'fecha' => Carbon::create(2025, 8, 10),
-                'fecha_cita' => Carbon::create(2025, 8, 15),
-                'estado' => 'pendiente',
-                'correlativo' => 1,
+                'estado' => 'finalizado',
             ],
             [
-                'numero_afiliacion' => 'IGSS-1002',
-                'nombre' => 'María Fernanda',
-                'apellido' => 'Gómez',
-                'sexo' => 'Femenino',
-                'calidad' => 'BH',
-                'edad' => 34,
-                'unidad' => 'Guatemala',
-                'area' => 'Emergencia',
-                'programa' => 'Gineco-Obstetricia',
-                'seccion' => 'Bioquímica',
-                'perfil' => 'Diabetes',
-                'pruebas' => json_encode(['Glucosa', 'Hemoglobina']),
-                'fecha' => Carbon::create(2025, 8, 12),
-                'fecha_cita' => Carbon::create(2025, 8, 18),
-                'estado' => 'toma de muestras',
-                'correlativo' => 2,
-            ],
-            [
+                'fecha' => '2025-08-14',
+                'fecha_cita' => '2025-08-20',
                 'numero_afiliacion' => 'IGSS-1003',
                 'nombre' => 'Luis Alberto',
                 'apellido' => 'Martínez',
@@ -66,22 +58,30 @@ class ExamenMesSeeder extends Seeder
                 'seccion' => 'Urología',
                 'perfil' => 'Renal',
                 'pruebas' => json_encode(['Creatinina']),
-                'fecha' => Carbon::create(2025, 8, 14),
-                'fecha_cita' => Carbon::create(2025, 8, 20),
                 'estado' => 'finalizado',
-                'correlativo' => 3,
             ],
         ];
+        $correlativos = [];
         foreach ($examenesAgosto as $examen) {
-            Examen::create($examen);
+            $key = $examen['numero_afiliacion'] . '-2025-08';
+            $correlativos[$key] = ($correlativos[$key] ?? 0) + 1;
+            $examen['correlativo'] = $correlativos[$key];
+            $examen['created_at'] = now();
+            $examen['updated_at'] = now();
+            \App\Models\Examen::create($examen);
         }
 
         // Septiembre: 2 exámenes
         $calidades = ['AF', 'BH', 'Pen', 'BE', 'NA'];
         $fechaSeptiembre = Carbon::create(2025, 9, 5);
+        // Septiembre: 2 exámenes, correlativo reiniciado por paciente
+        $correlativos = [];
         for ($i = 1; $i <= 2; $i++) {
-            Examen::create([
-                'numero_afiliacion' => 'SEP-00' . $i,
+            $num_afiliacion = 'SEP-00' . $i;
+            $key = $num_afiliacion . '-2025-09';
+            $correlativos[$key] = ($correlativos[$key] ?? 0) + 1;
+            \App\Models\Examen::create([
+                'numero_afiliacion' => $num_afiliacion,
                 'nombre' => $i === 1 ? 'Ana Sofía' : 'Carlos Enrique',
                 'apellido' => $i === 1 ? 'López' : 'Méndez',
                 'sexo' => $i === 1 ? 'Femenino' : 'Masculino',
@@ -96,50 +96,11 @@ class ExamenMesSeeder extends Seeder
                 'fecha' => $fechaSeptiembre->copy()->addDays($i),
                 'fecha_cita' => $fechaSeptiembre->copy()->addDays($i+2),
                 'estado' => $i === 1 ? 'proceso' : 'pendiente',
-                'correlativo' => $i,
+                'correlativo' => $correlativos[$key],
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
 
-        // Octubre: 4 exámenes
-        $fechaOctubre = Carbon::create(2025, 10, 2);
-        for ($i = 1; $i <= 4; $i++) {
-            Examen::create([
-                'numero_afiliacion' => 'OCT-00' . $i,
-                'nombre' => 'Paciente Octubre ' . $i,
-                'apellido' => 'Apellido',
-                'sexo' => 'Masculino',
-                'calidad' => $calidades[($i+2)%count($calidades)],
-                'edad' => 40,
-                'unidad' => 'Santa Barbara',
-                'area' => 'Emergencia',
-                'programa' => 'Pediatría',
-                'seccion' => 'Urología',
-                'perfil' => 'Perfil',
-                'pruebas' => json_encode(['Prueba3']),
-                'fecha' => $fechaOctubre,
-                'correlativo' => $i,
-            ]);
-        }
-
-        // Noviembre: 2 exámenes
-        $fechaNoviembre = Carbon::create(2025, 11, 15);
-        for ($i = 1; $i <= 2; $i++) {
-            Examen::create([
-                'numero_afiliacion' => 'NOV-00' . $i,
-                'nombre' => 'Paciente Noviembre ' . $i,
-                'apellido' => 'Apellido',
-                'sexo' => 'Femenino',
-                'calidad' => $calidades[($i+3)%count($calidades)],
-                'edad' => 28,
-                'unidad' => 'San Lucas Tolimán',
-                'area' => 'Clínica de Personal',
-                'programa' => 'Traumatología y Ortopedia',
-                'seccion' => 'Bioquímica',
-                'perfil' => 'Perfil',
-                'pruebas' => json_encode(['Prueba4']),
-                'fecha' => $fechaNoviembre,
-                'correlativo' => $i,
-            ]);
-        }
     }
 }
