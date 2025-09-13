@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -14,7 +15,7 @@ return new class extends Migration
         Schema::create('examens', function (Blueprint $table) {
             $table->id(); 
             $table->integer('correlativo'); // correlativo mensual
-            $table->date('fecha')->default(DB::raw('CURRENT_DATE'));
+$table->date('fecha');
             $table->string('numero_afiliacion');
             $table->string('nombre');
             $table->string('apellido');

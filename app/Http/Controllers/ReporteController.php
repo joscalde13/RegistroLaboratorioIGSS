@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class ReporteController extends Controller
 {
-    // Muestra los años disponibles
+
     public function index()
     {
         $anios = Examen::selectRaw('YEAR(fecha) as anio')
@@ -18,7 +18,7 @@ class ReporteController extends Controller
         return view('reportes.index', compact('anios'));
     }
 
-    // Muestra los meses de un año
+    
     public function meses($anio)
     {
         $meses = Examen::selectRaw('MONTH(fecha) as mes')
@@ -29,7 +29,7 @@ class ReporteController extends Controller
         return view('reportes.meses', compact('anio', 'meses'));
     }
 
-    // Muestra la tabla de exámenes de un mes/año
+    
     public function listado($anio, $mes)
     {
         $examens = Examen::whereYear('fecha', $anio)
@@ -39,5 +39,5 @@ class ReporteController extends Controller
         return view('reportes.listado', compact('anio', 'mes', 'examens'));
     }
 
-    // Métodos para PDF y Excel se agregarán después
+   
 }

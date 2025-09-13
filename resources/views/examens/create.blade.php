@@ -139,7 +139,7 @@
                 </div>
             </div>
 
-            <!-- Pruebas Section - Full width -->
+            
             <div class="mt-6 border-t dark:border-zinc-700 pt-6">
                 <label class="block text-sm font-medium text-blue-900 dark:text-zinc-200 mb-3">Pruebas de Laboratorio</label>
                 <div id="pruebas-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
@@ -153,7 +153,7 @@
                 </div>
             </div>
 
-            <!-- Buttons -->
+            
             <div class="mt-8 flex flex-col sm:flex-row justify-end gap-3">
                      <a href="{{ route('examens.index') }}" id="btn-cancelar"
                          class="px-6 py-3 rounded-lg text-gray-800 dark:text-zinc-200 font-semibold border border-gray-300 dark:border-zinc-700 hover:bg-gray-50 dark:hover:bg-zinc-800 transition text-center">
@@ -197,7 +197,7 @@
         const container = document.getElementById('pruebas-container');
         container.innerHTML = '';
 
-        // Si hay old('pruebas') del backend, respétalas
+        
         @if(is_array(old('pruebas')))
             const oldPruebas = @json(old('pruebas'));
             if (oldPruebas.length) {
@@ -216,12 +216,12 @@
     document.addEventListener('DOMContentLoaded', () => {
         llenarPruebas();
 
-        // Añadir prueba manual
+       
         document.getElementById('btn-add-prueba').addEventListener('click', () => {
             document.getElementById('pruebas-container').insertAdjacentHTML('beforeend', inputPruebaTemplate(''));
         });
 
-        // Delegación para eliminar prueba
+        
         document.getElementById('pruebas-container').addEventListener('click', (e) => {
             if (e.target.classList.contains('btn-remove-prueba')) {
                 const row = e.target.closest('.flex');

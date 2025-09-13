@@ -60,19 +60,19 @@
                             <td class="px-3 py-3">{{ $examen->estado ?? '-' }}</td>
                             <td class="px-3 py-3">
                                 <div class="flex gap-1">
-                                    <a href="{{ route('examens.edit', $examen->id) }}" class="px-2 py-1 bg-yellow-400 text-white rounded hover:bg-yellow-500" title="Editar">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2l-6 6m2-2l-6 6m2-2l6-6" /></svg>
-                                    </a>
-                                    <form action="{{ route('examens.destroy', $examen->id) }}" method="POST" onsubmit="return confirm('¿Seguro que desea eliminar este examen?');" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600" title="Eliminar">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                                        </button>
-                                    </form>
-                                    <a href="{{ route('examens.historial', $examen->numero_afiliacion) }}" class="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700" title="Ver historial">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                    </a>
+                                        <a href="{{ route('examens.edit', $examen->id) }}" class="w-24 px-2 py-1 text-center bg-yellow-400 text-white rounded hover:bg-yellow-500" title="Editar">
+                                            Editar
+                                        </a>
+                                        <form action="{{ route('examens.destroy', $examen->id) }}" method="POST" onsubmit="return confirm('¿Seguro que desea eliminar este examen?');" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="w-24 px-2 py-1 text-center bg-red-500 text-white rounded hover:bg-red-600" title="Eliminar">
+                                                Eliminar
+                                            </button>
+                                        </form>
+                                        <a href="{{ route('examens.historial', $examen->numero_afiliacion) }}" class="w-24 px-2 py-1 text-center bg-blue-600 text-white rounded hover:bg-blue-700" title="Ver historial">
+                                            Ver historial
+                                        </a>
                                 </div>
                             </td>
                         </tr>
@@ -92,7 +92,7 @@
             </div>
         </div>
         <div class="mt-6">
-            <a href="{{ route('reportes.meses', $anio) }}" class="text-blue-600 hover:underline">&larr; Volver a meses</a>
+            <a href="{{ route('reportes.meses', $anio) }}" class="inline-block px-4 py-2 rounded bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">&larr; Volver a meses</a>
         </div>
     </div>
 </x-layouts.app>

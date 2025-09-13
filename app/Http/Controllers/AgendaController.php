@@ -8,7 +8,7 @@ class AgendaController extends Controller
 {
     public function index()
     {
-        // Obtener todas las citas (exámenes con fecha de cita)
+        
     $citas = Examen::whereNotNull('fecha_cita')->where('estado', '!=', 'finalizado')->get();
         return view('agenda.index', compact('citas'));
     }
